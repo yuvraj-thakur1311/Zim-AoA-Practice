@@ -9,7 +9,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Dashboard</h2>
         <Button
-          className="bg-red-800 text-white hover:bg-red-900"
+          className="bg-red-800 text-white hover:bg-red-900 cursor-pointer"
           onClick={() =>
             navigate("/patients", {
               state: { openOnboarding: true },
