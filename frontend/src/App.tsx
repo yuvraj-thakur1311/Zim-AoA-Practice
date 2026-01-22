@@ -1,11 +1,31 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SidebarProvider, SidebarInset } from "./components/ui/sidebar";
 
-function App() {
+import Navbar from "./pages/Navbar";
+import AppSidebar from "./pages/AppSidebar";
+import Dashboard from "./pages/Dashboard";
 
+
+export default function App() {
   return (
-    <>
-      heyy..
-    </>
-  )
-}
+    <BrowserRouter>
+      <SidebarProvider>
+        <div className="h-screen w-screen flex flex-col overflow-hidden bg-background text-foreground">
+          <Navbar />
 
-export default App
+          <div className="flex flex-1 min-h-0 w-full overflow-hidden">
+            <AppSidebar />
+
+            <SidebarInset className="w-full overflow-hidden">
+              <main className="h-full w-full p-6 bg-muted/40 overflow-y-auto">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                </Routes>
+              </main>
+            </SidebarInset>
+          </div>
+        </div>
+      </SidebarProvider>
+    </BrowserRouter>
+  );
+}
