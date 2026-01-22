@@ -27,8 +27,14 @@ export default function AppSidebar() {
           <SidebarMenuItem>
             <NavLink to="/dashboard" end>
               {({ isActive }) => (
-                <SidebarMenuButton isActive={isActive} tooltip="Dashboard">
-                  <LayoutDashboardIcon />
+                <SidebarMenuButton 
+                  isActive={isActive} 
+                  tooltip="Dashboard" 
+                  className="cursor-pointer"
+                >
+                  <div className={`flex items-center justify-center rounded-md p-1.5 ${isActive ? 'bg-red-700 text-white' : ''}`}>
+                    <LayoutDashboardIcon className="h-4 w-4" />
+                  </div>
                   <span>Dashboard</span>
                 </SidebarMenuButton>
               )}
@@ -37,8 +43,14 @@ export default function AppSidebar() {
           <SidebarMenuItem>
             <NavLink to="/patients">
               {({ isActive }) => (
-                <SidebarMenuButton isActive={isActive} tooltip="Patients">
-                  <Users2Icon />
+                <SidebarMenuButton 
+                  isActive={isActive} 
+                  tooltip="Patients" 
+                  className="cursor-pointer"
+                >
+                  <div className={`flex items-center justify-center rounded-md p-1.5 ${isActive ? 'bg-red-700 text-white' : ''}`}>
+                    <Users2Icon className="h-4 w-4" />
+                  </div>
                   <span>Patients</span>
                 </SidebarMenuButton>
               )}
