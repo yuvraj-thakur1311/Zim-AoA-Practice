@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarInset } from "./components/ui/sidebar";
 import Navbar from "./pages/Navbar";
 import AppSidebar from "./pages/AppSidebar";
 import Dashboard from "./pages/Dashboard";
+import PatientList from "./pages/PatientList";
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
               <main className="h-full w-full p-6 bg-muted/40 overflow-y-auto">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
+                  <Route path="/patients" element={<PatientList />} />
                 </Routes>
               </main>
             </SidebarInset>

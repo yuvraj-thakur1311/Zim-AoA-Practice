@@ -30,15 +30,14 @@ export default function AppSidebar() {
 
       <SidebarContent>
         <SidebarMenu>
-          {/* Dashboard */}
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Dashboard">
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive
-                    ? "bg-gray-800 dark:bg-gray-900"
-                    : ""
+                  `flex items-center gap-2 rounded-md px-2 py-2 ${
+                    isActive ? "bg-red-600 text-white" : "hover:bg-muted"
+                  }`
                 }
               >
                 <Home className="h-4 w-4" />
@@ -46,16 +45,14 @@ export default function AppSidebar() {
               </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
-
-          {/* Orders */}
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Patients">
               <NavLink
                 to="/patients"
                 className={({ isActive }) =>
-                  isActive
-                    ? "bg-gray-900 dark:bg-gray-700"
-                    : ""
+                  `flex items-center gap-2 rounded-md px-2 py-2 ${
+                    isActive ? "bg-red-600 text-white" : "hover:bg-muted"
+                  }`
                 }
               >
                 <List className="h-4 w-4" />
