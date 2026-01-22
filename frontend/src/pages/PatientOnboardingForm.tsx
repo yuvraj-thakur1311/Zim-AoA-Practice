@@ -80,13 +80,11 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-
         {/* ---------- NAME ---------- */}
         <div className="grid grid-cols-3 gap-4">
           <FormField
             control={control}
             name="firstName"
-     
             rules={{ required: "First name is required" }}
             render={({ field }) => (
               <FormItem>
@@ -94,7 +92,7 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
                   First Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-<Input placeholder="Enter" {...field} />
+                  <Input placeholder="Enter" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +106,7 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
               <FormItem>
                 <FormLabel>Middle Name</FormLabel>
                 <FormControl>
-<Input placeholder="Enter" {...field} />
+                  <Input placeholder="Enter" {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -124,7 +122,7 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
                   Last Name <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-<Input placeholder="Enter" {...field} />
+                  <Input placeholder="Enter" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -148,7 +146,7 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-<Input placeholder="Enter email " {...field} />
+                  <Input placeholder="Enter email " {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -165,7 +163,7 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
                   Contact Number <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-<Input placeholder="Enter last name" {...field} />
+                  <Input placeholder="Enter last name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -191,13 +189,13 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
                         variant="outline"
                         className={cn(
                           "w-full justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {field.value
                           ? format(field.value, "PPP")
-                          : "Pick a date"}
+                          : "MM/DD/YYYY"}
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -209,8 +207,7 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
                       fromYear={1900}
                       toYear={new Date().getFullYear()}
                       disabled={(date) =>
-                        date > new Date() ||
-                        date < new Date("1900-01-01")
+                        date > new Date() || date < new Date("1900-01-01")
                       }
                     />
                   </PopoverContent>
@@ -248,165 +245,161 @@ export default function PatientOnboardingForm({ onCreate }: Props) {
           />
         </div>
 
-       {/* ---------- ADDRESS ---------- */}
-<div className="space-y-4">
+        {/* ---------- ADDRESS ---------- */}
+        <div className="space-y-4">
+          {/* STREET + COUNTRY */}
+          <div className="grid grid-cols-4 gap-4">
+            {/* STREET */}
+            <FormField
+              control={control}
+              name="street"
+              rules={{ required: "Street is required" }}
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Street</FormLabel>
+                  <FormControl>
+                    <Input placeholder="House no, street name..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-  {/* STREET + COUNTRY */}
-  <div className="grid grid-cols-4 gap-4">
-    {/* STREET */}
-    <FormField
-      control={control}
-      name="street"
-      rules={{ required: "Street is required" }}
-      render={({ field }) => (
-        <FormItem className="col-span-2">
-          <FormLabel>Street</FormLabel>
-          <FormControl>
-<Input placeholder="Enter" {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+            {/* COUNTRY */}
+            <FormField
+              control={control}
+              name="country"
+              rules={{ required: "Country is required" }}
+              render={({ field }) => (
+                <FormItem className="col-span-2">
+                  <FormLabel>Country</FormLabel>
 
-    {/* COUNTRY */}
-    <FormField
-  control={control}
-  name="country"
-  rules={{ required: "Country is required" }}
-  render={({ field }) => (
-    <FormItem className="col-span-2">
-      <FormLabel>Country</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      form.setValue("state", "");
+                      form.setValue("city", "");
+                    }}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                    </FormControl>
 
-      <Select
-        value={field.value}
-        onValueChange={(value) => {
-          field.onChange(value);
-          form.setValue("state", "");
-          form.setValue("city", "");
-        }}
-      >
-        <FormControl>
-          <SelectTrigger>
-            <SelectValue placeholder="Select country" />
-          </SelectTrigger>
-        </FormControl>
+                    <SelectContent
+                      side="bottom"
+                      sideOffset={4}
+                      avoidCollisions={false}
+                      className="max-h-60 overflow-y-auto"
+                    >
+                      {countries.map((c) => (
+                        <SelectItem key={c} value={c}>
+                          {c}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
 
-        <SelectContent
-          side="bottom"
-          sideOffset={4}
-          avoidCollisions={false}
-          className="max-h-60 overflow-y-auto"
-        >
-          {countries.map((c) => (
-            <SelectItem key={c} value={c}>
-              {c}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+          {/* STATE + CITY + ZIP */}
+          <div className="grid grid-cols-3 gap-4">
+            {/* STATE */}
+            <FormField
+              control={control}
+              name="state"
+              rules={{ required: "State is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      form.setValue("city", "");
+                    }}
+                    disabled={!country}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select state" />
+                      </SelectTrigger>
+                    </FormControl>
 
-  </div>
+                    <SelectContent
+                      position="popper"
+                      className="max-h-60 overflow-y-auto"
+                    >
+                      {states.map((s) => (
+                        <SelectItem key={s} value={s}>
+                          {s}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-  {/* STATE + CITY + ZIP */}
-  <div className="grid grid-cols-3 gap-4">
-    {/* STATE */}
-    <FormField
-      control={control}
-      name="state"
-      rules={{ required: "State is required" }}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>State</FormLabel>
-          <Select
-            value={field.value}
-            onValueChange={(value) => {
-              field.onChange(value);
-              form.setValue("city", "");
-            }}
-            disabled={!country}
-          >
-            <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder="Select state" />
-              </SelectTrigger>
-            </FormControl>
+            {/* CITY */}
+            <FormField
+              control={control}
+              name="city"
+              rules={{ required: "City is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    disabled={!state}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select city" />
+                      </SelectTrigger>
+                    </FormControl>
 
-            <SelectContent
-              position="popper"
-              className="max-h-60 overflow-y-auto"
-            >
-              {states.map((s) => (
-                <SelectItem key={s} value={s}>
-                  {s}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+                    <SelectContent
+                      position="popper"
+                      className="max-h-60 overflow-y-auto"
+                    >
+                      {cities.map((city) => (
+                        <SelectItem key={city} value={city}>
+                          {city}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-    {/* CITY */}
-    <FormField
-      control={control}
-      name="city"
-      rules={{ required: "City is required" }}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>City</FormLabel>
-          <Select
-            value={field.value}
-            onValueChange={field.onChange}
-            disabled={!state}
-          >
-            <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder="Select city" />
-              </SelectTrigger>
-            </FormControl>
-
-            <SelectContent
-              position="popper"
-              className="max-h-60 overflow-y-auto"
-            >
-              {cities.map((city) => (
-                <SelectItem key={city} value={city}>
-                  {city}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-
-    {/* ZIP */}
-    <FormField
-      control={control}
-      name="zipCode"
-      rules={{ required: "Zip code is required" }}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Zip Code</FormLabel>
-          <FormControl>
-<Input placeholder="Enter" {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  </div>
-
-</div>
-
+            {/* ZIP */}
+            <FormField
+              control={control}
+              name="zipCode"
+              rules={{ required: "Zip code is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Zip Code</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
 
         {/* ---------- ACTIONS ---------- */}
         <div className="flex justify-end gap-3 pt-4">
